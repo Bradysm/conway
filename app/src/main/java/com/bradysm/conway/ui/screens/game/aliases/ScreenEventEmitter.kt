@@ -1,11 +1,11 @@
 package com.bradysm.conway.ui.screens.game.aliases
 
-import com.bradysm.conway.ui.screens.game.ScreenEvent
+import com.bradysm.conway.ui.screens.game.GameScreenEvent
 
 /**
- * Type alias representing a callback which emits a screen event
+ * Type alias representing a callback which emits a game screen event
  *
  * This callback will eventually bubble up to the ViewModel as the main entrypoint
  * for the
  */
-typealias ScreenEventEmitter = (ScreenEvent) -> Unit
+typealias GameScreenEventEmitter = (GameScreenEvent) -> Unit

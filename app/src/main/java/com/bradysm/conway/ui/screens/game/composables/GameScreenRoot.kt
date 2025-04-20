@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bradysm.conway.ui.screens.game.aliases.ScreenEventEmitter
+import com.bradysm.conway.ui.screens.game.aliases.GameScreenEventEmitter
 import com.bradysm.conway.ui.screens.game.composables.menu.GameMenu
 import com.bradysm.conway.ui.screens.game.models.ScreenUIModel
 
@@ -18,7 +18,7 @@ import com.bradysm.conway.ui.screens.game.models.ScreenUIModel
  * core entry point into the application. This should be rendered by the MainActivity.
  */
 @Composable
-fun MainGameScreen(screenState: ScreenUIModel, emitEvent: ScreenEventEmitter, modifier: Modifier = Modifier) {
+fun GameScreenRoot(screenState: ScreenUIModel, emitEvent: GameScreenEventEmitter, modifier: Modifier = Modifier) {
     // fill the entire screen
     Box(modifier.fillMaxSize()) {
         GameGrid(screenState.gameMap, Modifier.align(Alignment.Center), emitEvent = emitEvent)

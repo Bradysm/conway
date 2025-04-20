@@ -21,7 +21,8 @@ import kotlinx.coroutines.flow.stateIn
  * All UI changes for this screen should continue to follow the UDF principles.
  */
 class GameScreenViewModel: ViewModel() {
-    // TODO: Add Hilt to inject these into the ViewModel
+    // TODO: Add Hilt/Koin to inject these into the ViewModel, this is terrible
+    // there is no reason that the VM knows how to construct these
     private val gameRepository = ConwayGameStore()
     private val gameEngine = GameEngine(viewModelScope) { gameRepository.executeCycle() }
 
@@ -42,19 +43,19 @@ class GameScreenViewModel: ViewModel() {
      * If the intent changed the state of the game, a new [ScreenUIModel] will be emitted from
      * the [screenState] flow which the UI should collect to stay aware.
      */
-    fun emit(event: ScreenEvent) {
+    fun emit(event: GameScreenEvent) {
         when (event) {
-            is ScreenEvent.TogglePosition -> {
+            is GameScreenEvent.TogglePosition -> {
                 gameRepository.toggleCellLiveliness(event.cell)
             }
-            is ScreenEvent.ToggleEngineState -> {
-                gameEngine.process(GameEngine.GameEngineAction.ToggleEngineState)
+            is GameScreenEvent.ToggleEngineState -> {
+                gameEngine.toggleEngine()
             }
-            is ScreenEvent.ResetGame -> {
+            is GameScreenEvent.ResetGame -> {
                 gameRepository.reset()
-                gameEngine.process(GameEngine.GameEngineAction.StopEngine)
+                gameEngine.stop()
             }
-            is ScreenEvent.ToggleMenuExpansion -> {
+            is GameScreenEvent.ToggleMenuExpansion -> {
                 gameRepository.toggleMenuVisibility()
             }
         }
@@ -66,29 +67,29 @@ class GameScreenViewModel: ViewModel() {
  * to the ViewModel. All intent actions that need to manipulate game data from a UI
  * interaction should be added to this sealed class.
  */
-sealed class ScreenEvent {
+sealed class GameScreenEvent {
     /**
      * Event triggered when a game cell position is toggled by the user.
      *
      * @property cell The [GameCell] that was toggled, containing position and state information.
      */
-    data class TogglePosition(val cell: GameCell): ScreenEvent()
+    data class TogglePosition(val cell: GameCell): GameScreenEvent()
 
     /**
      * Event triggered when the user requests to toggle the game engine's running state.
      * This will either start or stop the game simulation depending on its current state.
      */
-    data object ToggleEngineState: ScreenEvent()
+    data object ToggleEngineState: GameScreenEvent()
 
     /**
      * Event triggered when the user requests to reset the game to its initial state.
      * This will clear all active cells and reset any game progress.
      */
-    data object ResetGame: ScreenEvent()
+    data object ResetGame: GameScreenEvent()
 
     /**
      * Event triggered when the user toggles the game menu's expansion state.
      * This will either expand or collapse the menu UI component.
      */
-    data object ToggleMenuExpansion: ScreenEvent()
+    data object ToggleMenuExpansion: GameScreenEvent()
 }

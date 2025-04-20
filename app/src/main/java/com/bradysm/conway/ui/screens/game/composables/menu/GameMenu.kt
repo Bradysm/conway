@@ -8,9 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.bradysm.conway.ui.screens.game.GameScreenViewModel
-import com.bradysm.conway.ui.screens.game.ScreenEvent
-import com.bradysm.conway.ui.screens.game.aliases.ScreenEventEmitter
+import com.bradysm.conway.ui.screens.game.GameScreenEvent
+import com.bradysm.conway.ui.screens.game.aliases.GameScreenEventEmitter
 import com.bradysm.conway.ui.screens.game.composables.menu.components.GameInfo
 import com.bradysm.conway.ui.screens.game.composables.menu.components.MenuWindowHeader
 import com.bradysm.conway.ui.screens.game.composables.menu.components.TerminalButton
@@ -28,13 +27,13 @@ import com.bradysm.conway.ui.theme.TerminalBlack
 fun GameMenu(
     menuModel: GameMenuUIModel,
     modifier: Modifier = Modifier,
-    emitEvent: ScreenEventEmitter
+    emitEvent: GameScreenEventEmitter
 ) {
     // Create an interaction source to detect when the button is pressed
     val onMenuButtonClick: (MenuButtonType) -> Unit = { menuButtonType ->
         when (menuButtonType) {
-            MenuButtonType.START, MenuButtonType.STOP -> emitEvent(ScreenEvent.ToggleEngineState)
-            MenuButtonType.RESET -> emitEvent(ScreenEvent.ResetGame)
+            MenuButtonType.START, MenuButtonType.STOP -> emitEvent(GameScreenEvent.ToggleEngineState)
+            MenuButtonType.RESET -> emitEvent(GameScreenEvent.ResetGame)
         }
     }
 

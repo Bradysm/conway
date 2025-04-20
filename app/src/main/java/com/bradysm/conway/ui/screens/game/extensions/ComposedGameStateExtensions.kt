@@ -1,6 +1,6 @@
 package com.bradysm.conway.ui.screens.game.extensions
 
-import com.bradysm.conway.domain.engine.GameEngineState
+import com.bradysm.conway.domain.engine.EngineState
 import com.bradysm.conway.ui.screens.game.models.ComposedGameState
 import com.bradysm.conway.ui.screens.game.models.GameMenuUIModel
 import com.bradysm.conway.ui.screens.game.models.MenuButtonUIModel
@@ -29,8 +29,8 @@ fun Flow<ComposedGameState>.toScreenState(): Flow<ScreenUIModel> {
  */
 fun ComposedGameState.toGameMenuModel(): GameMenuUIModel {
     val primaryButtonType = when(engineModel.engineState) {
-        GameEngineState.EXECUTING -> MenuButtonType.STOP
-        GameEngineState.STOPPED -> MenuButtonType.START
+        EngineState.EXECUTING -> MenuButtonType.STOP
+        EngineState.STOPPED -> MenuButtonType.START
     }
     val primaryButtonModel = MenuButtonUIModel(primaryButtonType)
     return GameMenuUIModel(

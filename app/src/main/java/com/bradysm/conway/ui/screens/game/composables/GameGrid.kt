@@ -15,8 +15,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bradysm.conway.domain.state.modles.GameCell
-import com.bradysm.conway.ui.screens.game.ScreenEvent
-import com.bradysm.conway.ui.screens.game.aliases.ScreenEventEmitter
+import com.bradysm.conway.ui.screens.game.GameScreenEvent
+import com.bradysm.conway.ui.screens.game.aliases.GameScreenEventEmitter
 import com.bradysm.conway.ui.theme.TerminalGreen
 
 
@@ -32,12 +32,12 @@ fun GameGrid(
     gameMap: List<List<Boolean>>,
     modifier: Modifier = Modifier,
     cellSize: Dp = 24.dp,
-    emitEvent: ScreenEventEmitter,
+    emitEvent: GameScreenEventEmitter,
 ) {
     val density = LocalDensity.current
     val cellSizePx = with(density) { cellSize.toPx() }
     val onCellClicked: (GameCell) -> Unit =  { gameCell ->
-        emitEvent(ScreenEvent.TogglePosition(gameCell))
+        emitEvent(GameScreenEvent.TogglePosition(gameCell))
     }
 
     val gameCanvasModifier =  modifier

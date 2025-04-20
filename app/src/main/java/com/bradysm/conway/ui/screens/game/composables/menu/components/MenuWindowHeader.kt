@@ -25,8 +25,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bradysm.conway.ui.screens.game.ScreenEvent
-import com.bradysm.conway.ui.screens.game.aliases.ScreenEventEmitter
+import com.bradysm.conway.ui.screens.game.GameScreenEvent
+import com.bradysm.conway.ui.screens.game.aliases.GameScreenEventEmitter
 import com.bradysm.conway.ui.screens.game.models.MenuButtonType
 import com.bradysm.conway.ui.screens.game.models.MenuButtonUIModel
 import com.bradysm.conway.ui.theme.MaximizeButtonGreen
@@ -38,7 +38,7 @@ import com.bradysm.conway.ui.theme.TerminalWhite
 fun MenuWindowHeader(
     isMenuExpanded: Boolean,
     primaryActionButtonModel: MenuButtonUIModel,
-    emitEvent: ScreenEventEmitter,
+    emitEvent: GameScreenEventEmitter,
     modifier: Modifier = Modifier,
     ) {
     Box(
@@ -55,7 +55,7 @@ fun MenuWindowHeader(
                 .clip(CircleShape)
                 .background(if (isMenuExpanded) MinimizeButtonYellow else MaximizeButtonGreen)
                 .clickable {
-                    emitEvent(ScreenEvent.ToggleMenuExpansion)
+                    emitEvent(GameScreenEvent.ToggleMenuExpansion)
                 }
         )
 
@@ -73,7 +73,7 @@ fun MenuWindowHeader(
             exit = fadeOut()
         ) {
             IconButton(onClick = {
-                emitEvent(ScreenEvent.ToggleEngineState)
+                emitEvent(GameScreenEvent.ToggleEngineState)
             }, modifier = Modifier.wrapContentSize()) {
                 val iconVector = when(primaryActionButtonModel.type) {
                     is MenuButtonType.START -> Icons.Filled.PlayArrow
